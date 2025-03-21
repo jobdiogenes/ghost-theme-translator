@@ -75,7 +75,8 @@ function create(options) {
         .then(files=> {
             let arr = [];
             files.forEach(file => {
-                let {extension, data} = file;
+                let {extension, name, data} = file;
+                console.log("Process:"+name);  // in case of error you could now where stopped. 
                 if (extension === '.hbs') {
                     let strings = collectStrings(data)
                     arr = [...new Set([...arr ,...strings])];
