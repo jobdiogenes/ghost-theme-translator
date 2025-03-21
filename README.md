@@ -71,11 +71,11 @@ gtt c [options]
 1. Fork this repo
 2. `git clone https://github.com/<your-username>/ghost-theme-translator.git path/to/your/workspace`
 3. `cd path/to/your/workspace`
-4. `npm install`
+4. `yarn`
 
 To run the CLI using your workspace files
 
-1. `npm link`
+1. `yarn link`
 2. `gtt <command> [options]` ( you can run anywhere on your system)
 
 
