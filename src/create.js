@@ -93,11 +93,8 @@ function create(options) {
             const ignoreRules = parseGTTignore(themeRoot);
             files.forEach(file => {
                 const relativePath = path.relative(themeRoot, file.fullname);
-                if (ignoreRules.ignores(relativePath)) {
-                    return; // Skip ignored files
-                }
                 let {extension, name, data} = file;
-                if (extension === '.hbs' ) {
+                if (extension === '.hbs' && !ignoreRules.ignores(relativePath)) {
                     console.log("Process:"+name);  // in case of error you could now where stopped. 
                     let strings = collectStrings(data)
                     arr = [...new Set([...arr ,...strings])];
