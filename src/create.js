@@ -2,6 +2,7 @@
     Handles create command
 =====================================================*/
 const fs = require('fs');
+const path = require('path');
 const rra = require('recursive-readdir-async');
 const chalk = require('chalk')
 const {performance} = require('perf_hooks');
@@ -11,6 +12,19 @@ const checkLanguage = require('./lib/check-language')
 const collectStrings = require('./lib/collect-string');
 const Spinner = require('./lib/spinner')
 const spinner = new Spinner();
+const ignore = require("ignore");
+
+// Function to parse .gitignore file
+function parseGTTignore(dirPath) {
+    const gitignorePath = path.join(dirPath, ".gttignore");
+    if (!fs.existsSync(gitignorePath)) {
+        return ignore().add([]); // Return an empty ignore instance if no .gitignore exists
+    }
+
+    const gitignoreContent = fs.readFileSync(gitignorePath, "utf8");
+    return ignore().add(gitignoreContent); // Add .gitignore rules
+}
+
 /*=====================================================
     create function
 =====================================================*/
@@ -74,9 +88,14 @@ function create(options) {
     rra.list(themeRoot, rraOptions)
         .then(files=> {
             let arr = [];
+            const ignoreRules = parseGitignore(themeRoot);
             files.forEach(file => {
-                let {extension, name, path, data} = file;
-                if (extension === '.hbs' && path.indexOf("icons")<0) {
+                const relativePath = path.relative(themeRoot, file.fullname);
+                if (ignoreRules.ignores(relativePath)) {
+                    return; // Skip ignored files
+                }
+                let {extension, name, data} = file;
+                if (extension === '.hbs' ) {
                     console.log("Process:"+name);  // in case of error you could now where stopped. 
                     let strings = collectStrings(data)
                     arr = [...new Set([...arr ,...strings])];
