@@ -33,6 +33,6 @@
     "commander": "^4.1.0",
     "recursive-readdir-async": "^1.1.6",
     "path": "^0.12.7",
-    "ignore': '^4.0.6"
+    "ignore": "^4.0.6"
   }
 }
