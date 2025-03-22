@@ -90,7 +90,7 @@ function create(options) {
     rra.list(themeRoot, rraOptions)
         .then(files=> {
             let arr = [];
-            const ignoreRules = parseGitignore(themeRoot);
+            const ignoreRules = parseGTTignore(themeRoot);
             files.forEach(file => {
                 const relativePath = path.relative(themeRoot, file.fullname);
                 if (ignoreRules.ignores(relativePath)) {
