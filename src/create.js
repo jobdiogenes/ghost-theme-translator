@@ -2,7 +2,6 @@
     Handles create command
 =====================================================*/
 const fs = require('fs');
-const path = require('path');
 const rra = require('recursive-readdir-async');
 const chalk = require('chalk')
 const {performance} = require('perf_hooks');
@@ -12,6 +11,9 @@ const checkLanguage = require('./lib/check-language')
 const collectStrings = require('./lib/collect-string');
 const Spinner = require('./lib/spinner')
 const spinner = new Spinner();
+
+// add to support .ignore file
+const path = require('path');
 const ignore = require("ignore");
 
 // Function to parse .gitignore file
